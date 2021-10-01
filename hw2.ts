@@ -28,7 +28,7 @@
 ** ============================================================================ */
 
 export const HONOR_PLEDGE = "I pledge on my honor that this assignment is my own work.";
-export const SIGNATURE = "<your-full-name-here>"; // TODO: FILL ME IN
+export const SIGNATURE = "MST JASMINE JAHAN"; // TODO: FILL ME IN
 
 // If you had any collaborators on this assignment, please list their github handles here.
 export const COLLABORATORS = [
@@ -37,7 +37,7 @@ export const COLLABORATORS = [
 
 // If you used any resources, please list them here
 export const RESOURCES_CONSULTED = [
-    "www.google.com", // TODO: FILL ME IN
+    "www.google.com","you tube","stackoverflow","mdn" // TODO: FILL ME IN
 ];
 
 
@@ -66,31 +66,29 @@ Hint: each function body is 1 line.
 ** ----------------------------------------------------- */
 
 export function f1<T>(): (arg: T) => T {
-    // TODO: implement me
-    throw Error("TODO");
+     
+    return (arg: T) => arg;
 }
 
-export function f2<T, U>(arg1: T, arg2: (x: T) => U): U  {
-    // TODO: implement me
-    // Food for thought: what is this function doing?
-    throw Error("TODO");
+export f2<T, U>(arg1: T, arg2: (x: T) => U): U  {
+    
+    return arg2(arg1);
 }
 
 export function f3<T, U>(arg1: T): (arg2: (x: T) => U) => U {
-    // TODO: implement me
-    // Food for thought: how is f3 related to f2?
-    throw Error("TODO");
+     
+    return (arg2: (x: T) => U) => f2(arg1, arg2);    
 }
 
 export function f4<T, U, V>(arg1: T, arg2: U, arg3: (x: T) => (y: U) => V): V  {
-    // TODO: implement me
-    throw Error("TODO");
+  
+    return arg3(arg1)(arg2);
+    
 }
 
 export function f5<T, U, V>(arg1: T, arg2: U, arg3: (x: T, y: U) => V): V  {
-    // TODO: implement me
-    // Food for thought: how is f5 related to f4?
-    throw Error("TODO");
+   
+    return arg3(arg1,arg2);
 }
 
 
@@ -128,8 +126,36 @@ Example 2:
 ** ----------------------------------------------------- */
 
 export function arrayOfArithmeticFunctions(names: ("plus"|"minus"|"times"|"divide")[]): ((x: number, y: number) => number)[] {
-    // TODO: implement me
-    return [];
+    
+    const resultarr = [];
+    
+    const plus = (x: number, y: number): number => x + y;
+    const minus = (x: number, y: number): number => x - y;
+    const times = (x: number, y: number): number => x * y;
+    const divide = (x: number, y: number): number => x / y;
+    
+    for(const name of names){
+        
+            if (name === "plus"){ 
+                resultarr.push(plus);
+            }
+
+            else if (name === "minus"){
+                resultarr.push(minus);
+            }
+
+            else if (name === "times" ){
+                resultarr.push(times);
+            }
+
+            else if (name === "divide"){ 
+                resultarr.push(divide);
+
+            }
+    }
+    
+    return resultarr;
+    
 }
 
 
@@ -156,8 +182,20 @@ export function registerCallbacks(onUndefined: () => number,
                                   onAnyString: (str: string) => number,
                                   onObject: (obj: object) => number,
                                   ): (userInput: undefined|string|object) => number {
-    // TODO: implement me
-    throw Error("TODO");
+    
+    const a =  (userInput: undefined|string|object) => {
+       if(userInput === undefined){
+           return onUndefined();
+       }
+       else if (userInput === "string") {
+           return onAnyString("str");
+       }
+       else if(userInput === "object"){
+           return onObject({});
+       }
+   } 
+   
+   return a;
 }
 
 
@@ -191,8 +229,7 @@ export type CUnsafePair<S, T> = {
 }
 
 export function CUnsafePair<S, T>(fst: S, snd: T): CUnsafePair<S, T> {
-    // TODO: implement me
-    throw Error("TODO");
+    return {fst,snd};
 }
 
 
@@ -229,8 +266,15 @@ export type CBetterPair<S, T> = {
 }
 
 export function CBetterPair<S, T>(fst: S, snd: T): CBetterPair<S, T> {
-    // TODO: implement me
-    throw Error("TODO");
+    function _getFst() {
+        return fst;
+    }
+    
+    function _getSnd() {
+        return snd;
+    }
+   
+   return  {getFst:_getFst,getSnd:_getSnd};
 }
 
 
@@ -271,8 +315,19 @@ export type CPair<S, T> = {
 };
 
 export function CPair<S, T>(fst: S, snd: T): CPair<S, T> {
-    // TODO: implement me
-    throw Error("TODO");
+    function _getFst() {
+        return fst;
+    }
+    
+    function _getSnd() {
+        return snd;
+    }
+    
+    function _setSnd() {
+        return () => snd;
+    }
+    
+    return  {getFst:_getFst,getSnd:_getSnd,setSnd:_setSnd};
 }
 
 
@@ -392,7 +447,55 @@ to this problem with problem 4a from HW1.
 
 export function allPathsSatisfyingPredicate(predicate: (authority: string) => boolean,
                                             json: JSONValue): string[] {
-    return [];
+    
+        if (json === null) {
+            return []; 
+        }
+
+
+        else if (typeof json === "string") {
+            return []; 
+        }
+
+    
+        else if (Array.isArray(json)){
+            let acc = [];
+
+            for (const x of json) {
+                acc = acc.concat(allPathsSatisfyingPredicate(predicate, x));
+            }
+
+            return acc; 
+        }
+    
+       else {
+           let acc = [];
+
+           const jsonObj = json as { authority: string, path: string, links: JSONValue };
+
+               if(typeof jsonObj.authority === "string" && predicate(jsonObj.authority)){
+                       
+                           if (typeof jsonObj.path === "string"){
+                               
+                               acc = acc.concat(jsonObj.path);
+                           }
+                   
+                           else{
+                               
+                               acc = acc.concat("/");
+                           }
+
+               }
+
+          if(typeof jsonObj.links === "object"){
+              
+             acc = acc.concat(allPathsSatisfyingPredicate(predicate, jsonObj.links));
+
+          }
+    
+      return acc;
+    }
+       
 }
 
 /* ----------------------------------------------------- **
@@ -408,8 +511,11 @@ to this problem with problem 4b from HW1.
 
 export function countPathsSatisfyingPredicate(predicate: (authority: string) => boolean,
                                               json: JSONValue): number {
-    // TODO: implement me
-    return 0;
+    const acc = allPathsSatisfyingPredicate(predicate,json);
+    
+    const count = acc.map(x => Number(x.split('/').length > 2));
+
+    return count.reduce((x,y) => x + y);
 }
 
 
@@ -421,13 +527,12 @@ Use your solution to 3a and 3b to implement **pure** functions
 ** ----------------------------------------------------- */
 
 export function allPaths(authority: string, json: JSONValue): string[] {
-    // TODO: implement me
-    return [];
+       
+     return allPathsSatisfyingPredicate((arg: string) => (arg === authority),jsonLinkExample) ; 
 }
 
 export function countPaths(authority: string, json: JSONValue): number {
-    // TODO: implement me
-    return 0;
+     return countPathsSatisfyingPredicate((arg: string) => (arg === "authority"),jsonLinkExample);
 }
 
 
