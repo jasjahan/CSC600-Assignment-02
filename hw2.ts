@@ -229,7 +229,7 @@ export type CUnsafePair<S, T> = {
 }
 
 export function CUnsafePair<S, T>(fst: S, snd: T): CUnsafePair<S, T> {
-    return {fst,snd};
+    return {fst : fst,snd : snd};
 }
 
 
@@ -327,7 +327,7 @@ export function CPair<S, T>(fst: S, snd: T): CPair<S, T> {
         return () => snd;
     }
     
-    return  {getFst:_getFst,getSnd:_getSnd,setSnd:_setSnd};
+    return  {getFst:_getFst, getSnd:_getSnd, setSnd:_setSnd};
 }
 
 
@@ -458,14 +458,18 @@ export function allPathsSatisfyingPredicate(predicate: (authority: string) => bo
         }
 
     
-        else if (Array.isArray(json)){
+         else if (Array.isArray(json)){
+            
             let acc = [];
-
-            for (const x of json) {
-                acc = acc.concat(allPathsSatisfyingPredicate(predicate, x));
+           
+            let temp = json.map((x) => allPathsSatisfyingPredicate(predicate, x));
+            
+            for(const y of temp){
+                acc = acc.concat(y);
             }
-
-            return acc; 
+            
+            return acc;
+            
         }
     
        else {
@@ -546,8 +550,43 @@ any JSON entry that is missing one.
 ** ----------------------------------------------------- */
 
 export function fillInMissingPath(json: JSONValue): JSONValue {
-    // TODO: implement me
-    return "TODO";
+    if (json === null) {
+            return null; 
+        }
+
+
+        else if (typeof json === "string") {
+            return json; 
+        }
+
+    
+        else if (Array.isArray(json)){    
+            
+            let acc = [];
+            
+            let temp1 = json.map((x) => fillInMissingPath(x));
+            for(const y of temp1){
+                acc = acc.concat(y);
+            }
+           
+            return acc; 
+        }
+    
+       else {
+           let jsonObj = json as { authority: string, path: string, links: JSONValue };
+                 
+                           if (typeof jsonObj.path !== "string"){                             
+                              jsonObj.path = "/";
+                           }   
+           
+                           if(typeof jsonObj.links === "object"){
+                               jsonObj.links = fillInMissingPath(jsonObj.links);
+                           }
+                           
+           
+           return jsonObj;
+      }
+           
 }
 
 
