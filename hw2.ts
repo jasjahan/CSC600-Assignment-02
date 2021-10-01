@@ -315,6 +315,7 @@ export type CPair<S, T> = {
 };
 
 export function CPair<S, T>(fst: S, snd: T): CPair<S, T> {
+    { 
     function _getFst() {
         return fst;
     }
@@ -324,10 +325,12 @@ export function CPair<S, T>(fst: S, snd: T): CPair<S, T> {
     }
     
     function _setSnd() {
-        return () => snd;
+        return _getSnd() ;
     }
-    
-    return  {getFst:_getFst, getSnd:_getSnd, setSnd:_setSnd};
+            return  {getFst:_getFst, getSnd:_getSnd, setSnd:_setSnd};
+
+    };
+   
 }
 
 
