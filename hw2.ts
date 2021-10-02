@@ -539,7 +539,7 @@ export function allPaths(authority: string, json: JSONValue): string[] {
 }
 
 export function countPaths(authority: string, json: JSONValue): number {
-     return countPathsSatisfyingPredicate((arg: string) => (arg === "authority"),jsonLinkExample);
+     return countPathsSatisfyingPredicate((arg: string) => (arg === authority),jsonLinkExample);
 }
 
 
