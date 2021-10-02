@@ -714,8 +714,34 @@ on the left side.
 ** ----------------------------------------------------- */
 
 export function arrayToMerkleTree<T>(arr: T[]): MerkleTree<T> {
-    // TODO: implement me
-    return MLeaf(undefined, 0);
+     if (arr.length == 0) {
+      
+       return MLeaf(undefined, 0);
+   }
+    
+   else if(arr.length == 1){
+       
+       return MLeaf(arr[0], 0);
+   } 
+    
+   else if(arr.length == 2){
+        
+       return MNode(0, arrayToMerkleTree([arr[0]]), arrayToMerkleTree([arr[1]]));
+   }
+    
+   else if(arr.length == 3){
+         
+       return MNode(0, arrayToMerkleTree([arr[0], arr[1]]), arrayToMerkleTree([arr[2],undefined]));
+   }
+    
+    else {
+        const midpt = Math.ceil(arr.length / 2);
+        const leftarr = arr.slice(0, midpt);
+        const rightarr =arr.slice(midpt);
+        return MNode(0, arrayToMerkleTree(leftarr), arrayToMerkleTree(rightarr));
+
+    }
+     
 }
 
 
