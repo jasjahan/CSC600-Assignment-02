@@ -1,0 +1,5 @@
+hw2.ts(73,1): error TS1128: Declaration or statement expected.
+hw2.ts(73,21): error TS1005: ',' expected.
+hw2.ts(73,30): error TS1005: ',' expected.
+hw2.ts(73,44): error TS1005: ';' expected.
+hw2.ts(73,46): error TS1434: Unexpected keyword or identifier.
