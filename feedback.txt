@@ -1,0 +1,3 @@
+jasjahan homework doesn't compile
+
+ReferenceError: f2 is not defined
