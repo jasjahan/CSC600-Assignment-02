@@ -1,3 +1,1399 @@
-jasjahan homework doesn't compile
+Q1a
+f1 Test
+success: f()(4) === 4
+success: f()(2) === 2
+success: f()(1) === 1
+success: f()(0) === 0
+success: f()(-1) === -1
 
-ReferenceError: f2 is not defined
+f2 Test
+success: f(1,(x) => x + x) === 2
+success: f(1,(x) => x * x) === 1
+success: f(-1,(x) => x * x) === 1
+success: f(-1,(x) => x / x) === 1
+success: f(0,(x) => x + x) === 0
+
+f3 Test
+success: f(1)((x) => x + x) === 2
+success: f(1)((x) => x * x) === 1
+success: f(-1)((x) => x * x) === 1
+success: f(-1)((x) => x / x) === 1
+success: f(0)((x) => x + x) === 0
+
+f4 Test
+success: f(1,2,(x) => (y) => x + y) === 3
+success: f(1,2,(x) => (y) => x * y) === 2
+success: f(-1,2,(x) => (y) => x * y) === -2
+success: f(-1,2,(x) => (y) => x / y) === -0.5
+success: f(0,2,(x) => (y) => x + y) === 2
+
+f5 Test
+success: f(1,2,(x, y) => x + y) === 3
+success: f(1,2,(x, y) => x * y) === 2
+success: f(-1,2,(x, y) => x * y) === -2
+success: f(-1,2,(x, y) => x / y) === -0.5
+success: f(0,2,(x, y) => x + y) === 2
+
+Q1b
+success: f([plus,plus,minus,times,divide])[0](1,2) === 3
+success: f([plus,plus,minus,times,divide])[1](1,2) === 3
+success: f([plus,plus,minus,times,divide])[2](1,2) === -1
+success: f([plus,plus,minus,times,divide])[3](1,2) === 2
+success: f([plus,plus,minus,times,divide])[4](1,2) === 0.5
+
+success: f([minus,divide,divide,minus,plus])[0](1,2) === -1
+success: f([minus,divide,divide,minus,plus])[1](1,2) === 0.5
+success: f([minus,divide,divide,minus,plus])[2](1,2) === 0.5
+success: f([minus,divide,divide,minus,plus])[3](1,2) === -1
+success: f([minus,divide,divide,minus,plus])[4](1,2) === 3
+
+success: f([times,divide,plus,times,minus])[0](1,2) === 2
+success: f([times,divide,plus,times,minus])[1](1,2) === 0.5
+success: f([times,divide,plus,times,minus])[2](1,2) === 3
+success: f([times,divide,plus,times,minus])[3](1,2) === 2
+success: f([times,divide,plus,times,minus])[4](1,2) === -1
+
+success: f([times,plus,divide,divide,minus])[0](1,2) === 2
+success: f([times,plus,divide,divide,minus])[1](1,2) === 3
+success: f([times,plus,divide,divide,minus])[2](1,2) === 0.5
+success: f([times,plus,divide,divide,minus])[3](1,2) === 0.5
+success: f([times,plus,divide,divide,minus])[4](1,2) === -1
+
+success: f([minus,plus,divide,times,minus])[0](1,2) === -1
+success: f([minus,plus,divide,times,minus])[1](1,2) === 3
+success: f([minus,plus,divide,times,minus])[2](1,2) === 0.5
+success: f([minus,plus,divide,times,minus])[3](1,2) === 2
+success: f([minus,plus,divide,times,minus])[4](1,2) === -1
+
+
+Q1c
+success: f(() => 1,() => 2,(str) => 3,(obj) => 4)(undefined) === 1
+failed: f(() => 1,() => 2,(str) => 3,(obj) => 4)(hello) === undefined !== 2
+failed: f(() => 1,() => 2,(str) => 3,(obj) => 4)(never) === undefined !== 3
+failed: f(() => 1,() => 2,(str) => 3,(obj) => 4)([object Object]) === undefined !== 4
+failed: f(() => 1,() => 2,(str) => 3,(obj) => 4)() === undefined !== 3
+
+failed: f(() => 2,() => 3,(str) => 4,(obj) => 5)([object Object]) === undefined !== 5
+success: f(() => 2,() => 3,(str) => 4,(obj) => 5)(undefined) === 2
+failed: f(() => 2,() => 3,(str) => 4,(obj) => 5)(hello) === undefined !== 3
+failed: f(() => 2,() => 3,(str) => 4,(obj) => 5)(gonna) === undefined !== 4
+failed: f(() => 2,() => 3,(str) => 4,(obj) => 5)() === undefined !== 4
+
+failed: f(() => 3,() => 4,(str) => 5,(obj) => 6)(give) === undefined !== 5
+failed: f(() => 3,() => 4,(str) => 5,(obj) => 6)([object Object]) === undefined !== 6
+success: f(() => 3,() => 4,(str) => 5,(obj) => 6)(undefined) === 3
+failed: f(() => 3,() => 4,(str) => 5,(obj) => 6)(hello) === undefined !== 4
+failed: f(() => 3,() => 4,(str) => 5,(obj) => 6)() === undefined !== 5
+
+failed: f(() => 4,() => 5,(str) => 6,(obj) => 7)(hello) === undefined !== 5
+failed: f(() => 4,() => 5,(str) => 6,(obj) => 7)(you) === undefined !== 6
+failed: f(() => 4,() => 5,(str) => 6,(obj) => 7)([object Object]) === undefined !== 7
+success: f(() => 4,() => 5,(str) => 6,(obj) => 7)(undefined) === 4
+failed: f(() => 4,() => 5,(str) => 6,(obj) => 7)() === undefined !== 6
+
+success: f(() => 5,() => 6,(str) => 7,(obj) => 8)(undefined) === 5
+failed: f(() => 5,() => 6,(str) => 7,(obj) => 8)(hello) === undefined !== 6
+failed: f(() => 5,() => 6,(str) => 7,(obj) => 8)(up) === undefined !== 7
+failed: f(() => 5,() => 6,(str) => 7,(obj) => 8)([object Object]) === undefined !== 8
+failed: f(() => 5,() => 6,(str) => 7,(obj) => 8)() === undefined !== 7
+
+
+Q2a
+success: f(73,79) === [object Object]
+success: f(undefined,null) === [object Object]
+success: f(25,482) === [object Object]
+success: f(88,2) === [object Object]
+success: f(171,82) === [object Object]
+
+Q2b
+success: f(73,79).getFst() === 73 && f(73,79).getSnd() === 79
+success: f(undefined,null).getFst() === undefined && f(undefined,null).getSnd() === null
+success: f(25,482).getFst() === 25 && f(25,482).getSnd() === 482
+success: f(88,2).getFst() === 88 && f(88,2).getSnd() === 2
+success: f(171,82).getFst() === 171 && f(171,82).getSnd() === 82
+
+Q2c
+success: f(73,79).getFst() === 73 && f(73,79).getSnd() === 79
+failed: f(73,79).getSnd() !== undefined after setSnd()
+
+success: f(undefined,null).getFst() === undefined && f(undefined,null).getSnd() === null
+failed: f(undefined,null).getSnd() !== 3 after setSnd()
+
+success: f(25,482).getFst() === 25 && f(25,482).getSnd() === 482
+failed: f(25,482).getSnd() !== 29 after setSnd()
+
+success: f(88,2).getFst() === 88 && f(88,2).getSnd() === 2
+failed: f(88,2).getSnd() !== null after setSnd()
+
+success: f(171,82).getFst() === 171 && f(171,82).getSnd() === 82
+failed: f(171,82).getSnd() !== 12 after setSnd()
+
+
+Q3a
+success: f(authority => authority.indexOf("one") >= 0,null) === []
+success: f(authority => authority.indexOf("www") >= 0,[object Object],[object Object]) === [/,huh]
+success: f(authority => authority.indexOf("net") >= 0,[object Object],[object Object]) === [/,2,2,locations,yeet]
+success: f(authority => authority.indexOf("four") >= 0,[object Object],[object Object]) === [/,/,/,/,/]
+success: f(authority => authority.indexOf("two") >= 0,[object Object]) === [/]
+
+Q3b
+failed: throws error TypeError: Reduce of empty array with no initial value
+success: f((authority) => authority.indexOf("www") >= 0,[object Object],[object Object]) === 0
+success: f((authority) => authority.indexOf("net") >= 0,[object Object],[object Object]) === 0
+success: f((authority) => authority.indexOf("four") >= 0,[object Object],[object Object]) === 0
+success: f((authority) => authority.indexOf("two") >= 0,[object Object]) === 0
+
+Q3c
+failed: f(one.com,null) === [1] !== []
+success: g(one.com,null) === 0
+
+success: f(one.com,[object Object],[object Object]) === [1]
+success: g(one.com,[object Object],[object Object]) === 0
+
+failed: f(app.three.com,[object Object],[object Object]) === [locations/42] !== [cart]
+success: g(app.three.com,[object Object],[object Object]) === 0
+
+failed: f(app.one.com,[object Object],[object Object]) === [2] !== [2,4,admin,login]
+success: g(app.one.com,[object Object],[object Object]) === 0
+
+failed: f(eight.com,[object Object]) === [/] !== [/,/,admin,blyat,locations/42]
+success: g(eight.com,[object Object]) === 0
+
+
+Q3d
+success: f(null) === null
+failed: f([object Object],[object Object]) === [object Object],[object Object] !== [object Object],[object Object]
+failed: f([object Object],[object Object]) === [object Object],[object Object] !== [object Object],[object Object]
+failed: f([object Object],[object Object]) === [object Object],[object Object] !== [object Object],[object Object]
+failed: f([object Object]) === [object Object] !== [object Object]
+
+Q4a
+success: f() === {
+  "tag": "LEAF",
+  "hashValue": 0
+}
+success: f(1,2,3,4,5) === {
+  "tag": "NODE",
+  "hashValue": 0,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 1,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 2,
+        "hashValue": 0
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 3,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "hashValue": 0
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "LEAF",
+      "contents": 4,
+      "hashValue": 0
+    },
+    "right": {
+      "tag": "LEAF",
+      "contents": 5,
+      "hashValue": 0
+    }
+  }
+}
+success: f(83,-56,58,94,-6,-31,65,-26,-87,26) === {
+  "tag": "NODE",
+  "hashValue": 0,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 83,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -56,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 58,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 0
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 94,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": -6,
+        "hashValue": 0
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": -31,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 65,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": -26,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 0
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": -87,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 26,
+        "hashValue": 0
+      }
+    }
+  }
+}
+success: f(-933.28,177.41,660.46,-609.52,516.86,66.86,-501.09,-799.75,316.01,277.85,926.55,-920.04,166.79,-619.96,-951.43) === {
+  "tag": "NODE",
+  "hashValue": 0,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": -933.28,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 177.41,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 660.46,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -609.52,
+          "hashValue": 0
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 516.86,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 66.86,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": -501.09,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -799.75,
+          "hashValue": 0
+        }
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 316.01,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 277.85,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 926.55,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -920.04,
+          "hashValue": 0
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 166.79,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -619.96,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": -951.43,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 0
+        }
+      }
+    }
+  }
+}
+success: f(0,0,0,0,0,0,0,0,0,0) === {
+  "tag": "NODE",
+  "hashValue": 0,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 0
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 0
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      }
+    }
+  }
+}
+
+Q4b
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "LEAF",
+  "hashValue": 42
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": 909,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 362,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 627,
+      "left": {
+        "tag": "LEAF",
+        "contents": 1,
+        "hashValue": 281
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 2,
+        "hashValue": 562
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 456,
+      "left": {
+        "tag": "LEAF",
+        "contents": 3,
+        "hashValue": 843
+      },
+      "right": {
+        "tag": "LEAF",
+        "hashValue": 42
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 884,
+    "left": {
+      "tag": "LEAF",
+      "contents": 4,
+      "hashValue": 127
+    },
+    "right": {
+      "tag": "LEAF",
+      "contents": 5,
+      "hashValue": 408
+    }
+  }
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": -306,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 20,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 721,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -339,
+        "left": {
+          "tag": "LEAF",
+          "contents": 83,
+          "hashValue": 392
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -56,
+          "hashValue": -781
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 984,
+        "left": {
+          "tag": "LEAF",
+          "contents": 58,
+          "hashValue": 346
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 42
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": -551,
+      "left": {
+        "tag": "LEAF",
+        "contents": 94,
+        "hashValue": 492
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": -6,
+        "hashValue": -689
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": -627,
+    "left": {
+      "tag": "NODE",
+      "hashValue": -58,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -870,
+        "left": {
+          "tag": "LEAF",
+          "contents": -31,
+          "hashValue": -735
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 65,
+          "hashValue": 319
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -620,
+        "left": {
+          "tag": "LEAF",
+          "contents": -26,
+          "hashValue": -327
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 42
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": -785,
+      "left": {
+        "tag": "LEAF",
+        "contents": -87,
+        "hashValue": -519
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 26,
+        "hashValue": 327
+      }
+    }
+  }
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": -559.704309463501,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 785.72998046875,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 374.57767486572266,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -32.026127338409424,
+        "left": {
+          "tag": "LEAF",
+          "contents": -933.28,
+          "hashValue": -678.7599999904633
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 177.41,
+          "hashValue": 580.4699999988079
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 636.7259945869446,
+        "left": {
+          "tag": "LEAF",
+          "contents": 660.46,
+          "hashValue": 625.8200000524521
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -609.52,
+          "hashValue": -548.8400000333786
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 24.925743103027344,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 842.1129970550537,
+        "left": {
+          "tag": "LEAF",
+          "contents": 516.86,
+          "hashValue": 353.6200000047684
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 66.86,
+          "hashValue": 522.6200000047684
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -252.66100883483887,
+        "left": {
+          "tag": "LEAF",
+          "contents": -501.09,
+          "hashValue": -648.0299999713898
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -799.75,
+          "hashValue": -903.25
+        }
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": -856.3850040435791,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 146.50345993041992,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 728.512731552124,
+        "left": {
+          "tag": "LEAF",
+          "contents": 316.01,
+          "hashValue": 444.6700000166893
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 277.85,
+          "hashValue": 608.9500000476837
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -295.67095375061035,
+        "left": {
+          "tag": "LEAF",
+          "contents": 926.55,
+          "hashValue": 43.84999990463257
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -920.04,
+          "hashValue": -826.6800000667572
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": -915.7713069915771,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -775.7648537158966,
+        "left": {
+          "tag": "LEAF",
+          "contents": 166.79,
+          "hashValue": 28.929999977350235
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -619.96,
+          "hashValue": -212.3200000524521
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -237.57201623916626,
+        "left": {
+          "tag": "LEAF",
+          "contents": -951.43,
+          "hashValue": -494.80999994277954
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 42
+        }
+      }
+    }
+  }
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": 38,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 660,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 625,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 826,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 42
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 660,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 625,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 826,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 42
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      }
+    }
+  }
+}
+
+Q4c
+failed: f([object Object]) === false !== true
+failed: f([object Object]) === false !== true
+failed: f([object Object]) === false !== true
+failed: f([object Object]) === false !== true
+failed: f([object Object]) === false !== true
+
+Q4d
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "LEAF",
+  "hashValue": 29
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": 81,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 334,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 809,
+      "left": {
+        "tag": "LEAF",
+        "contents": 1,
+        "hashValue": 281
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 2,
+        "hashValue": 562
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 319,
+      "left": {
+        "tag": "LEAF",
+        "contents": 3,
+        "hashValue": 843
+      },
+      "right": {
+        "tag": "LEAF",
+        "hashValue": 18
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 114,
+    "left": {
+      "tag": "LEAF",
+      "contents": 4,
+      "hashValue": 127
+    },
+    "right": {
+      "tag": "LEAF",
+      "contents": 5,
+      "hashValue": 408
+    }
+  }
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": -49,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 348,
+    "left": {
+      "tag": "NODE",
+      "hashValue": -775,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -771,
+        "left": {
+          "tag": "LEAF",
+          "contents": 83,
+          "hashValue": 392
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -56,
+          "hashValue": -781
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 948,
+        "left": {
+          "tag": "LEAF",
+          "contents": 58,
+          "hashValue": 346
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 6
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": -822,
+      "left": {
+        "tag": "LEAF",
+        "contents": 94,
+        "hashValue": 492
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": -6,
+        "hashValue": -689
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": -716,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 612,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -20,
+        "left": {
+          "tag": "LEAF",
+          "contents": -31,
+          "hashValue": -735
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 65,
+          "hashValue": 319
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -958,
+        "left": {
+          "tag": "LEAF",
+          "contents": -26,
+          "hashValue": -327
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 31
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": -730,
+      "left": {
+        "tag": "LEAF",
+        "contents": -87,
+        "hashValue": -519
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 26,
+        "hashValue": 327
+      }
+    }
+  }
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": -958.66259765625,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 570.9560546875,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 597.4435424804688,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -844.55517578125,
+        "left": {
+          "tag": "LEAF",
+          "contents": -933.28,
+          "hashValue": -678.7599999904633
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 177.41,
+          "hashValue": 580.4699999988079
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -37.10693359375,
+        "left": {
+          "tag": "LEAF",
+          "contents": 660.46,
+          "hashValue": 625.8200000524521
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -609.52,
+          "hashValue": -548.8400000333786
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 888.6190795898438,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 43.47412109375,
+        "left": {
+          "tag": "LEAF",
+          "contents": 516.86,
+          "hashValue": 353.6200000047684
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 66.86,
+          "hashValue": 522.6200000047684
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 529.4931640625,
+        "left": {
+          "tag": "LEAF",
+          "contents": -501.09,
+          "hashValue": -648.0299999713898
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -799.75,
+          "hashValue": -903.25
+        }
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": -709.99951171875,
+    "left": {
+      "tag": "NODE",
+      "hashValue": -673.98583984375,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 966.765625,
+        "left": {
+          "tag": "LEAF",
+          "contents": 316.01,
+          "hashValue": 444.6700000166893
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 277.85,
+          "hashValue": 608.9500000476837
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -268.6304931640625,
+        "left": {
+          "tag": "LEAF",
+          "contents": 926.55,
+          "hashValue": 43.84999990463257
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -920.04,
+          "hashValue": -826.6800000667572
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 603.883056640625,
+      "left": {
+        "tag": "NODE",
+        "hashValue": -525.2549514770508,
+        "left": {
+          "tag": "LEAF",
+          "contents": 166.79,
+          "hashValue": 28.929999977350235
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": -619.96,
+          "hashValue": -212.3200000524521
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": -401.01234436035156,
+        "left": {
+          "tag": "LEAF",
+          "contents": -951.43,
+          "hashValue": -494.80999994277954
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 21
+        }
+      }
+    }
+  }
+}
+failed: f([object Object]) === {
+  "tag": "LEAF",
+  "hashValue": 0
+} !== {
+  "tag": "NODE",
+  "hashValue": 0,
+  "left": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 31
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      }
+    }
+  },
+  "right": {
+    "tag": "NODE",
+    "hashValue": 0,
+    "left": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        }
+      },
+      "right": {
+        "tag": "NODE",
+        "hashValue": 0,
+        "left": {
+          "tag": "LEAF",
+          "contents": 0,
+          "hashValue": 0
+        },
+        "right": {
+          "tag": "LEAF",
+          "hashValue": 23
+        }
+      }
+    },
+    "right": {
+      "tag": "NODE",
+      "hashValue": 0,
+      "left": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      },
+      "right": {
+        "tag": "LEAF",
+        "contents": 0,
+        "hashValue": 0
+      }
+    }
+  }
+}
